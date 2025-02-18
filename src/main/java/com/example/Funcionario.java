@@ -4,9 +4,9 @@ public class Funcionario {
     private String nome;
     private String email;
     private double salarioBase;
-    private String cargo;
+    private Cargo cargo;
 
-    public Funcionario(String nome, String email, double salarioBase, String cargo) {
+    public Funcionario(String nome, String email, double salarioBase, Cargo cargo) {
         this.nome = nome;
         this.email = email;
         this.salarioBase = salarioBase;
@@ -25,7 +25,7 @@ public class Funcionario {
         return salarioBase;
     }
 
-    public String getCargo() {
+    public Cargo getCargo() {
         return cargo;
     }
 }
