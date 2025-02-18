@@ -1,4 +1,8 @@
 package com.example;
 
-public class Cargo {
+public enum Cargo {
+    DESENVOLVEDOR,
+    DBA,
+    TESTADOR,
+    GERENTE
 }
