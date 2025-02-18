@@ -1,99 +1,72 @@
 package com.example;
 
 import org.junit.jupiter.api.*;
+import com.example.Funcionario;
+import com.example.CalculadoraSalario;
+import com.example.Cargo;
 
 import java.util.List;
 
 
 import static org.junit.jupiter.api.Assertions.*;
 
-public class ShoppingCartTest {
+public class CalculadoraSalarioTest {
+
+    private final CalculadoraSalario calculadora = new CalculadoraSalario();
 
     @Test
-    public void testAddBook() {
-        CalculadoraSalario cart = new CalculadoraSalario();
-        Book book = new Book("O Principice do céu", "1458966-4", 4.99);
-        cart.addBook(book);
-        assertEquals(1, cart.getBooks().size());
-        assertEquals(book, cart.getBooks().get(0));
+    void deveCalcularSalarioParaDesenvolvedorComSalarioMaiorQue3000() {
+        Funcionario desenvolvedor = new Funcionario("João", "joao@example.com", 5000, Cargo.DESENVOLVEDOR);
+        double salarioLiquido = calculadora.calcularSalarioLiquido(desenvolvedor);
+        assertEquals(4000, salarioLiquido, 0.01);
     }
 
     @Test
-    public void testRemoveBook() {
-        CalculadoraSalario cart = new CalculadoraSalario();
-        Book book = new Book("O Principice do céu", "1458966-4", 4.99);
-        cart.addBook(book);
-        cart.removeBook(book);
-        assertTrue(cart.getBooks().isEmpty());
+    void deveCalcularSalarioParaDesenvolvedorComSalarioMenorQue3000() {
+        Funcionario desenvolvedor = new Funcionario("Maria", "maria@example.com", 2000, Cargo.DESENVOLVEDOR);
+        double salarioLiquido = calculadora.calcularSalarioLiquido(desenvolvedor);
+        assertEquals(1800, salarioLiquido, 0.01);
     }
 
     @Test
-    public void testTotalPrice() {
-        CalculadoraSalario cart = new CalculadoraSalario();
-        cart.addBook(new Book("Livro 001", "111", 10.00));
-        cart.addBook(new Book("Livro 007", "222", 20.00));
-        assertEquals(30.00, cart.getTotalPrice(), 0.01);
+    void deveCalcularSalarioParaDBAComSalarioMaiorQue2000() {
+        Funcionario dba = new Funcionario("Carlos", "carlos@example.com", 2500, Cargo.DBA);
+        double salarioLiquido = calculadora.calcularSalarioLiquido(dba);
+        assertEquals(1875, salarioLiquido, 0.01);
     }
 
     @Test
-    public void testAddMultipleBooks() {
-        CalculadoraSalario cart = new CalculadoraSalario();
-        cart.addBook(new Book("Livro minha casa minha vida", "111", 15.00));
-        cart.addBook(new Book("Livro dolar acima de 6 reais", "222", 25.00));
-        cart.addBook(new Book("Livro como esconder dinheiro na cueca", "333", 35.00));
-        assertEquals(3, cart.getBooks().size());
+    void deveCalcularSalarioParaDBAComSalarioMenorQue2000() {
+        Funcionario dba = new Funcionario("Ana", "ana@example.com", 1500, Cargo.DBA);
+        double salarioLiquido = calculadora.calcularSalarioLiquido(dba);
+        assertEquals(1275, salarioLiquido, 0.01);
     }
 
     @Test
-    public void testRemoveNonexistentBook() {
-        CalculadoraSalario cart = new CalculadoraSalario();
-        Book book = new Book("Livrinho", "111", 10.00);
-        cart.removeBook(book);
-        assertTrue(cart.getBooks().isEmpty());
+    void deveCalcularSalarioParaGerenteComSalarioMaiorQue5000() {
+        Funcionario gerente = new Funcionario("Marcos", "marcos@example.com", 6000, Cargo.GERENTE);
+        double salarioLiquido = calculadora.calcularSalarioLiquido(gerente);
+        assertEquals(4200, salarioLiquido, 0.01);
     }
 
     @Test
-    public void testTotalPriceAfterRemovingBook() {
-        CalculadoraSalario cart = new CalculadoraSalario();
-        Book book1 = new Book("Livro Esperado", "111", 10.00);
-        Book book2 = new Book("Livro Adiado", "222", 20.00);
-        cart.addBook(book1);
-        cart.addBook(book2);
-        cart.removeBook(book1);
-        assertEquals(20.00, cart.getTotalPrice(), 0.01);
+    void deveCalcularSalarioParaGerenteComSalarioMenorQue5000() {
+        Funcionario gerente = new Funcionario("Clara", "clara@example.com", 4000, Cargo.GERENTE);
+        double salarioLiquido = calculadora.calcularSalarioLiquido(gerente);
+        assertEquals(3200, salarioLiquido, 0.01);
     }
 
     @Test
-    public void testAddAndRemoveSameBook() {
-        CalculadoraSalario cart = new CalculadoraSalario();
-        Book book = new Book("O Principice do céu", "1458966-4", 4.99);
-        cart.addBook(book);
-        cart.removeBook(book);
-        assertTrue(cart.getBooks().isEmpty());
+    void deveCalcularSalarioParaTestadorComSalarioMaiorQue2000() {
+        Funcionario testador = new Funcionario("Luis", "luis@example.com", 2500, Cargo.TESTADOR);
+        double salarioLiquido = calculadora.calcularSalarioLiquido(testador);
+        assertEquals(1875, salarioLiquido, 0.01);
     }
 
     @Test
-    public void testCartWithNoBooks() {
-        CalculadoraSalario cart = new CalculadoraSalario();
-        assertEquals(0.0, cart.getTotalPrice(), 0.01);
-        assertTrue(cart.getBooks().isEmpty());
-    }
-
-    @Test
-    public void testBooksImmutability() {
-        CalculadoraSalario cart = new CalculadoraSalario();
-        Book book = new Book("O Principice do céu", "1458966-4", 4.99);
-        cart.addBook(book);
-
-        List<Book> books = cart.getBooks();
-
-        try {
-            books.remove(0); 
-            fail("Expected UnsupportedOperationException");
-        } catch (UnsupportedOperationException e) {
-           
-        }
-
-        assertEquals(1, cart.getBooks().size());
+    void deveCalcularSalarioParaTestadorComSalarioMenorQue2000() {
+        Funcionario testador = new Funcionario("Rosa", "rosa@example.com", 1500, Cargo.TESTADOR);
+        double salarioLiquido = calculadora.calcularSalarioLiquido(testador);
+        assertEquals(1275, salarioLiquido, 0.01);
     }
 }
